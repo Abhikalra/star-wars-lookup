@@ -8,7 +8,7 @@ const baseURL = `${process.env.SWAPI_URL}`
 
 module.exports = {
   /**
-   * Gets the data for a people resource when querying by the id or searching by name from the Star Wars API
+   * Gets the data for a people resource when querying by the id from the Star Wars API
    * @param {object} req Request Object
    */
   async getDataForPersonById(req) {
@@ -55,7 +55,7 @@ module.exports = {
             classification: speciesType.classification || '',
             language: speciesType.language || ''
           }
-        }),
+        })[0] || {},
         films: peopleResult.films.map(film => {
           return {
             title: film.title || '',
@@ -69,6 +69,10 @@ module.exports = {
     return dataToReturn
   },
 
+  /**
+  * Gets the data for a people resource when querying by the name or total count of people resource from the Star Wars API
+  * @param {object} req Request Object
+  */
   async getDataForPeople(req) {
     let dataToReturn = { count: 0, results: [] }
     const personName = req.query.name || null

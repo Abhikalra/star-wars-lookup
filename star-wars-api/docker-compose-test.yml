@@ -1,0 +1,15 @@
+version: "2"
+services:
+  api-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "npm install && npm run test"
+    volumes:
+      - .:/usr/src/app
+    environment: 
+      - mode=development
+      - API_PORT=8100
+      - SWAPI_URL=https://swapi.co/api/  
+    networks:
+      - default

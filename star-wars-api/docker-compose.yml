@@ -1,0 +1,13 @@
+version: "2"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "npm install && nodemon ./bin/www"
+    ports: 
+      - "8100:8100"
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - default  

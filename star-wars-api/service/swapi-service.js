@@ -23,13 +23,30 @@ module.exports = {
           'Content-Type': 'application/json'
         }
       })
-      return response.json()
+      return this.handleResponse(response)
     } catch (err) {
-      const error = new Error()
-      error.message = 'Error occurred while fetching data from Star Wars API.'
-      error.code = 500
+      if (err.hasOwnProperty('statusCode')) {
+        throw err
+      }
+      const error = new Error('Error occurred while fetching data from Star Wars API.')
+      error.status = 500
+      error.statusCode = 500
       throw error
     }
+  },
 
+  /**
+   * Handle and return the response of the request
+   * @param {object} responseData Query result
+   */
+  handleResponse(responseData) {
+    console.log('Status: ' + `${responseData.status} ${responseData.statusText}`)
+    if (responseData !== undefined && responseData.status === 200 && responseData.headers.has('Content-Type') && responseData.headers.get('Content-Type').includes('application/json')) return responseData.json()
+    else if (responseData.status === 404) {
+      const error = new Error('Requested resource not found on Star Wars API')
+      error.status = responseData.status
+      error.statusCode = responseData.status
+      throw error
+    }
   }
 }
