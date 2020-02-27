@@ -13,7 +13,7 @@ To run the application locally, download or clone the repo. Following dependenci
 - Docker
 - Docker-compose
  
-To start the application, from within the parent directory of the project run the command ``` docker-compose up -d ``` in the terminal. This will initiate building of the docker images for the front and backend components and then start them in their respective containers. The UI will be available on browser at ```http://localhost:3100``` whereas the API listens on port ```8100```. 
+To start the application, from within the root directory of the project run the command ``` docker-compose up -d ``` in the terminal. This will initiate building of the docker images for the front and backend components and then start them in their respective containers. The UI will be available on browser at ```http://localhost:3100``` whereas the API listens on port ```8100```. 
 
 Prior to starting this application, ensure both these ports are not in use. Successful API startup can be determined by sending request to ```http://localhost:8100/health```which should return an *ok* response.
 
