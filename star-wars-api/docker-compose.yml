@@ -9,5 +9,9 @@ services:
       - "8100:8100"
     volumes:
       - .:/usr/src/app
+    environment: 
+      - mode=development
+      - API_PORT=8100
+      - SWAPI_URL=https://swapi.co/api/    
     networks:
       - default  

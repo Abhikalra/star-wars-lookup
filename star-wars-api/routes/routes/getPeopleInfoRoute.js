@@ -93,9 +93,9 @@ router.get('/people', validate(StarWarValidations.getByPeople), async (req, res,
  *                              Title of film
  * @apiSuccess {String}   body.films.director
  *                               Name of director
- * @apiSuccess {Number}   body.films.producers
+ * @apiSuccess {String}   body.films.producers
  *                               Names of producer
- * @apiSuccess {Number}   body.films.releaseDate
+ * @apiSuccess {String}   body.films.releaseDate
  *                               Release data
  * @apiError Error    Error response
  */

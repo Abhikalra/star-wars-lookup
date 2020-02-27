@@ -1,0 +1,14 @@
+<app-spinner [isRunning]="spinnerLoading"></app-spinner>
+<div class="container-fluid">
+    <div class="card-deck">
+        <show-details class="card bg-light mb-3" [title]="personInformation.bio.title"
+            [message]="personInformation.bio.message" [details]="personInformation.bio.details"></show-details>
+        <show-details class="card bg-light mb-3" [title]="personInformation.homePlanet.title"
+            [message]="personInformation.homePlanet.message" [details]="personInformation.homePlanet.details">
+        </show-details>
+        <show-details class="card bg-light mb-3" [title]="personInformation.speciesInfo.title"
+            [message]="personInformation.speciesInfo.message" [details]="personInformation.speciesInfo.details">
+        </show-details>
+    </div>
+    <app-show-movies-info [filmsList]="personInformation.films"></app-show-movies-info>
+</div>

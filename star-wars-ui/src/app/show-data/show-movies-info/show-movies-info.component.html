@@ -1,0 +1,29 @@
+<div class="card bg-light mb-3">
+  <div class="card-body">
+    <h5 class="card-title">Films the character appears in...</h5>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>Title</th>
+          <th>Release Date</th>
+          <th>Director(s)</th>
+          <th>Producer(s)</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let film of filmsList">
+        <td>
+          {{film.title }}
+        </td>
+        <td>
+          {{film.releaseDate | date:'longDate'}}
+        </td>
+        <td>
+          {{film.director }}
+        </td>
+        <td>
+          {{film.producers }}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

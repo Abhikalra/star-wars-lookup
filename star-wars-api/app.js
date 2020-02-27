@@ -7,8 +7,6 @@ const csp = require('helmet-csp')
 const bodyParser = require('body-parser')
 const starWarsInfo = require('./routes/routes/getPeopleInfoRoute')
 
-require('dotenv').config()
-
 app.use((req, res, next) => {
   console.info(req.method + 'request was made to ' + req.url)
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -29,6 +27,9 @@ app.use(csp({
     defaultSrc: ["'self'"]
   }
 }))
+app.get('/health', (req, res, next) => {
+  return res.json({status: 'ok'})
+})
 
 app.use('/get-starwars-info', starWarsInfo)
 

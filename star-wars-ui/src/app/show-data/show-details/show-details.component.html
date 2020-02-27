@@ -1,0 +1,5 @@
+<div class="card-body">
+    <h5 class="card-title">{{title}}</h5>
+    <p class="card-text">{{message}}</p>
+    <p *ngFor="let info of detailsData | keyvalue"><strong>{{info.key}} : </strong> {{info.value | titlecase}}</p>
+</div>

@@ -12,7 +12,7 @@ const cluster = require('cluster')
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.API_PORT || '8001')
+var port = normalizePort(process.env.API_PORT || '8100')
 app.set('port', port)
 
 /**
@@ -40,6 +40,7 @@ if (cluster.isMaster) {
   // If a worker dies, log it to the console
   cluster.on('exit', function (worker, code, signal) {
     console.error(`Worker ${worker.process.pid} died.`)
+    cluster.fork()
   })
 
   // Log when a worker starts listening

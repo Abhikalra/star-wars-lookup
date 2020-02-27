@@ -68,7 +68,16 @@ describe('Tests for fetching data from Star Wars API', function () {
       sinon.assert.called(getDataSpy)
       getDataSpy.restore()
     })
-
+    it('Calling the /get-starwars-info/people/:id endpoint with an id for non existing resource should return 404', async()=>{
+      const getDataSpy = sinon.spy(require('../service/swapi-service'), 'getData')
+      const result = await request(server).get('/get-starwars-info/people/199')
+      const body = result.body
+      assert(result.status === 404)
+      assert(body.message ===  'Requested resource not found on Star Wars API')
+      assert(body.error.status === 404)
+      sinon.assert.called(getDataSpy)
+      getDataSpy.restore()
+    })
     it('Calling the /get-starwars-info/people/:id endpoint an id should return consolidated information for the character', async()=>{
       const getDataSpy = sinon.spy(require('../service/swapi-service'), 'getData')
       const result = await request(server).get('/get-starwars-info/people/1')    

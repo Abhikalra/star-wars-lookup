@@ -1,0 +1,9 @@
+version: "2"
+services:
+  star-wars-ui:
+    build: .
+    command: bash -c "npm install && npm start"
+    ports:
+      - "3100:3100"
+    volumes:
+      - .:/usr/src/app 

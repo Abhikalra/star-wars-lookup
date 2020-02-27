@@ -1,0 +1,30 @@
+version: "2"
+services:
+  star-wars-api:
+    build:
+      context: ./star-wars-api
+      dockerfile: Dockerfile
+    command: bash -c "npm install && nodemon ./bin/www"
+    ports: 
+      - "8100:8100"
+    volumes:
+      - ./star-wars-api:/usr/src/app
+    environment: 
+      - mode=development
+      - API_PORT=8100
+      - SWAPI_URL=https://swapi.co/api/     
+    networks:
+      - default
+  star-wars-ui:
+    build:
+      context: ./star-wars-ui
+      dockerfile: Dockerfile
+    command: bash -c "npm install && npm start"
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./star-wars-ui:/usr/src/app
+    networks:
+      - default
+    depends_on:
+      - star-wars-api
