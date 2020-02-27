@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { StarWarsService } from '../../services/star-wars-service.service'
 import { ActivatedRoute } from '@angular/router'
 import { StaticSpinnerService } from '../../services/static-spinner.service'
+import { NgxSmartModalService } from 'ngx-smart-modal'
 
 @Component({
   selector: 'app-show-information',
@@ -14,7 +15,7 @@ export class ShowInformationComponent implements OnInit {
 
   personInformation: any
 
-  constructor(private route: ActivatedRoute, private starWarsService: StarWarsService) { 
+  constructor(private route: ActivatedRoute, private starWarsService: StarWarsService, private modalService: NgxSmartModalService) {
     this.personInformation = {
       bio: {
         title: 'About',
@@ -68,11 +69,11 @@ export class ShowInformationComponent implements OnInit {
    * Gets the Star Wars character summary data
    */
   async getData() {
-    try {
-      this.route.params.subscribe(async params => {
+    this.route.params.subscribe(async params => {
+      try {
         this.reinitializeData()
         StaticSpinnerService.loadingSpinner = true
-        const queryResult: any = await this.starWarsService.getPersonInformationById(params['id']).toPromise().catch(err => console.log(err))
+        const queryResult: any = await this.starWarsService.getPersonInformationById(params['id']).toPromise()
         if (queryResult) {
           this.personInformation.bio.details = {
             'Name': queryResult.name || 'n/a',
@@ -97,11 +98,20 @@ export class ShowInformationComponent implements OnInit {
           this.personInformation.films = queryResult.films
         }
         StaticSpinnerService.loadingSpinner = false
-      })
-    } catch (err) {
-      StaticSpinnerService.loadingSpinner = false
-      console.log(err)
-    }
+      } catch (err) {
+        StaticSpinnerService.loadingSpinner = false
+        if (typeof err === 'string') {
+          this.handleError(err)
+        } else this.handleError('There was an error fetching data from the API.')
+      }
+    })
   }
 
+  /**
+   * Opens a modal to display message
+   * @param message Message
+   */
+  handleError(message: string) {
+    this.modalService.create('alertModal', message).open()
+  }
 }

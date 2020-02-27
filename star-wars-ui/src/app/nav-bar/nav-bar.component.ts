@@ -3,6 +3,7 @@ import { StarWarsService } from '../services/star-wars-service.service'
 import { isNumber } from 'util';
 import { Router } from '@angular/router';
 import { StaticSpinnerService } from '../services/static-spinner.service'
+import { NgxSmartModalService } from 'ngx-smart-modal'
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,9 +14,9 @@ export class NavBarComponent implements OnInit {
   listOfPeople: any[] = [{ id: 0, name: 'Please select a name' }]
   selectedId = 0
 
-  constructor(private starWarsService: StarWarsService, private router: Router) {
+  constructor(private starWarsService: StarWarsService, private router: Router, private modalService: NgxSmartModalService) {
 
-   }
+  }
 
   ngOnInit() {
     this.loadData()
@@ -30,12 +31,14 @@ export class NavBarComponent implements OnInit {
   async loadData() {
     try {
       StaticSpinnerService.loadingSpinner = true
-      const peopleResult = await this.starWarsService.getListOfPeople().toPromise().catch(err => console.log(err))
+      const peopleResult = await this.starWarsService.getListOfPeople().toPromise()
       this.listOfPeople = this.listOfPeople.concat(peopleResult.results)
       StaticSpinnerService.loadingSpinner = false
     } catch (err) {
       StaticSpinnerService.loadingSpinner = false
-      console.log(err)
+      if (typeof err === 'string') {
+        this.handleError(err)
+      } else this.handleError('There was an error fetching data from the API.')
     }
   }
   /**
@@ -55,5 +58,12 @@ export class NavBarComponent implements OnInit {
     if (selectedId && selectedId !== '' && isNumber(parseInt(selectedId)) && parseInt(selectedId) > 0) {
       this.router.navigateByUrl(`/person-info/${selectedId}`)
     }
+  }
+  /**
+ * Opens a modal to display message
+ * @param message Message
+ */
+  handleError(message: string) {
+    this.modalService.create('alertModal', message).open()
   }
 }

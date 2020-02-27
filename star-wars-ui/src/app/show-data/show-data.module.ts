@@ -7,6 +7,7 @@ import { ShowInformationComponent } from './show-information/show-information.co
 import { ShowDetailsComponent } from './show-details/show-details.component';
 import { ShowMoviesInfoComponent } from './show-movies-info/show-movies-info.component';
 import { SharedModule } from '../shared/shared.module'
+import { NgxSmartModalModule } from 'ngx-smart-modal'
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SharedModule } from '../shared/shared.module'
   imports: [
     CommonModule,
     ShowDataRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxSmartModalModule.forChild()
   ]
 })
 export class ShowDataModule { }

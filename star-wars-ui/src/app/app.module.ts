@@ -9,6 +9,7 @@ import { PortalComponent } from './portal/portal.component'
 import { NavBarComponent } from './nav-bar/nav-bar.component'
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module'
+import { NgxSmartModalModule } from 'ngx-smart-modal'
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SharedModule } from './shared/shared.module'
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    NgxSmartModalModule.forRoot()
   ],
   providers: [StarWarsService],
   bootstrap: [AppComponent]
